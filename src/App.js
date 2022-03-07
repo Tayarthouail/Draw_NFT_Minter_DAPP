@@ -8,29 +8,25 @@ import * as s from "./styles/globalStyles";
 import styled from "styled-components";
 import { create } from "ipfs-http-client";
 import SignatureCanvas from "react-signature-canvas";
-import Loading from "./Loading/Loading"
+import Loading from "./Loading/Loading";
+import Web3 from "web3";
 
-export const StyledButton = styled.button`
-  padding: 8px;
-`;
 
 const ipfsClient = create("https://ipfs.infura.io:5001/api/v0");
+let web3 = new Web3(window.ethereum);
 
 function App() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
-  console.log(blockchain.account);
   const elementRef = useRef();
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [NFTS, setNFTS] = useState([]);
-
-console.log(NFTS);
-  // Input
-  const name = "NFT DROP DROP";
-  const description = "Mint your NFT before anyone else...";
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const ipfsBaseUrl = "https://ipfs.infura.io/ipfs/";
 
 
@@ -58,12 +54,15 @@ console.log(NFTS);
       setLoading(false);
       clearCanvas();
       setStatus("Successfully minting your NFT...!!");
+      setName("");
+      setDescription("");
+      setPrice("");
       dispatch(fetchData(blockchain.account));
     });
   }
 
   /*Create metadata and path*/
-  const createMetaDataAndPath = async (_name, _desc, _imgBuffer) => {
+  const createMetaDataAndPath = async (_name, _desc, _price, _imgBuffer) => {
     setLoading(true);
     setStatus("Minting your NFT is processing...!!");
       try {
@@ -74,12 +73,13 @@ console.log(NFTS);
       const MetaDataObj = {
         name: _name,
         description: _desc,
+        price: web3.utils.toWei(_price, "ether"),
         image: ipfsBaseUrl + addImage.path,
       };
+
       // upload JSON metadata to IPFS
       const addedMetaData = await ipfsClient.add(JSON.stringify(MetaDataObj));
       console.log(ipfsBaseUrl + addedMetaData.path);
-
       mint(ipfsBaseUrl + addedMetaData.path);
 
       } catch(err) {
@@ -91,7 +91,7 @@ console.log(NFTS);
 
   /* Start minting process*/
   const startMintingProcess = () => {
-    createMetaDataAndPath(name, description, getImageData());
+    createMetaDataAndPath(name, description,price, getImageData());
   }
 
 
@@ -102,7 +102,6 @@ console.log(NFTS);
       const buffer = Buffer(dataUrl.split(",")[1], "base64");
       console.log(buffer);
       return buffer;
-
   }
 
 
@@ -138,14 +137,14 @@ console.log(NFTS);
 
           <s.SpacerSmall />
 
-          <StyledButton
+          <s.Button
             onClick={(e) => {
               e.preventDefault();
               dispatch(connect());
-            }}
-          >
+            }}>
+          
             CONNECT
-          </StyledButton>
+          </s.Button>
 
           <s.SpacerSmall />
           
@@ -161,6 +160,36 @@ console.log(NFTS);
             Draw and mint your NFT NOW !
           </s.TextTitle>
           <s.SpacerLarge/>
+
+          <s.Form>
+            <s.FromControl>
+            <s.Label>Name</s.Label>
+              <s.Input 
+              type="text"
+              value={name}
+              placeholder="NFT's name"
+              onChange={(e)=> setName(e.target.value)}/>
+            </s.FromControl>
+
+          <s.FromControl>
+            <s.Label>Description</s.Label>
+            <s.Input
+              type="text"
+              value={description}
+              placeholder="NFT's description"
+              onChange={(e)=> setDescription(e.target.value)}/>
+          </s.FromControl>
+
+          <s.FromControl>
+          <s.Label>Price</s.Label>
+          <s.Input
+            type="text"
+            value={price}
+            placeholder="NFT's price"
+            onChange={(e)=> setPrice(e.target.value)}/>
+          </s.FromControl>  
+
+          </s.Form>
           
           {status !== "" ? (
           <>
@@ -181,23 +210,23 @@ console.log(NFTS);
           
           <s.Container fd={"row"} jc={"center"}>
 
-          <StyledButton
+          <s.Button
           onClick={(e)=> {
             e.preventDefault();
             startMintingProcess();
           }}>
             Mint
-          </StyledButton>
+          </s.Button>
 
           <s.SpacerSmall/>
 
-          <StyledButton
+          <s.Button
           onClick={(e)=> {
             e.preventDefault();
             clearCanvas();
           }}>
             Clear
-          </StyledButton>
+          </s.Button>
 
           </s.Container>
           
@@ -220,6 +249,7 @@ console.log(NFTS);
             return (
               <s.Container key={index}  style={{padding:16}}>
                 <s.TextTitle>{nft.metaData.name}</s.TextTitle>
+                <s.TextTitle>{nft.metaData.price}</s.TextTitle>
                 <img 
                 alt={nft.metaData.name}
                 src={nft.metaData.image} 
@@ -228,7 +258,7 @@ console.log(NFTS);
               </s.Container>
             )
            })
-          )}    
+          )}   
         </s.Container>
       )}
     </s.Screen>

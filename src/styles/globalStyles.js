@@ -50,6 +50,8 @@ export const Container = styled.div`
   background-position: center;
 `;
 
+
+// Form styling
 export const TextTitle = styled.p`
   color: var(--white);
   font-size: 20px;
@@ -73,4 +75,61 @@ export const StyledClickable = styled.div`
   :active {
     opacity: 0.6;
   }
+`;
+
+export const Form = styled.form`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+`;
+
+export const FromControl = styled.div`
+    width: 100%;
+    margin: 0px 0px 30px 0px;
+`;
+
+export const Input = styled.input`
+    width: 100%;
+    padding: 16px;
+    font-weight: 400;
+    color: #000;
+    border: 2px solid teal;
+    letter-spacing: 1px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 10px;
+    border:none;
+
+}
+`;
+
+export const Label = styled.label`
+    font-size: 18px;
+    font-family: "poppins", sans-serif;
+    color: #fff;
+    letter-spacing: 1px;
+`;
+
+// button 
+export const Button = styled.button`
+    height: 50px;
+    width: 175px;
+    background-color: #fff;
+    border: none;
+    color: #000;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+    font-size: 19px;
+
+    &:hover {
+      background-color: #dce7ff;
+      letter-spacing: 2px;
+    }
+
 `;
