@@ -133,7 +133,7 @@ function App() {
     <s.Screen>
       {blockchain.account === "" || blockchain.smartContract === null ? (
         <s.Container flex={1} ai={"center"} jc={"center"}>
-          <s.TextTitle>Connect to the Blockchain</s.TextTitle>
+          <s.TextTitle>Connect to Metamask</s.TextTitle>
 
           <s.SpacerSmall />
 
@@ -156,8 +156,8 @@ function App() {
         <s.Container flex={1} ai={"center"} style={{ padding: 24 }}>
           <s.SpacerLarge/>
           <s.SpacerLarge/>
-          <s.TextTitle style={{ textAlign: "center" }}>
-            Draw and mint your NFT NOW !
+          <s.TextTitle bigTitle Margin>
+            Draw and mint your own NFT !
           </s.TextTitle>
           <s.SpacerLarge/>
 
@@ -234,8 +234,8 @@ function App() {
           <s.SpacerLarge/>
 
           <SignatureCanvas
-          backgroundColor={"#3271bf"}
-          canvasProps={{width:400, height:350}}
+          backgroundColor={"#ffff"}
+          canvasProps={{width:695, height:500}}
           ref= {elementRef}
           />
          <s.SpacerLarge /> 

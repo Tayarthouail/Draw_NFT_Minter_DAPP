@@ -52,7 +52,7 @@ contract SmartContract is ERC721, Ownable {
        //create a new array type RenderToken to keep track of the lengh
        RenderToken[] memory result = new RenderToken[](lastestId);
 
-       for(uint256 i =0; i < lastestId; i++) {
+       for(uint256 i = 0; i < lastestId; i++) {
            if(_exists(counter)) {
             string memory uri = tokenURI(counter);
             result[counter] = RenderToken(counter, uri);

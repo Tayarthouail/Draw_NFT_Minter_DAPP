@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // Used for wrapping a page component
 export const Screen = styled.div`
-  background-color: var(--dark-grey);
+  background-color: var(--black);
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
   background-position: center;
@@ -54,9 +54,12 @@ export const Container = styled.div`
 // Form styling
 export const TextTitle = styled.p`
   color: var(--white);
-  font-size: 20px;
+  font-size: ${props => props.bigTitle ? "90px" : "20px"};
+  line-height: ${props => props.LineHight ? "50px" : "0px"}
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Bai Jamjuree", sans-serif;
+  text-align: center;
+  margin-bottom: ${props => props.Margin ? "20px" : "0"};
 `;
 
 export const TextSubTitle = styled.p`
