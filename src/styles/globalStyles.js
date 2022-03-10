@@ -136,3 +136,12 @@ export const Button = styled.button`
     }
 
 `;
+
+export const gridContainer = styled.div`
+     
+`;
+
+export const Card = styled.article`
+  
+
+`;

@@ -13,6 +13,7 @@ import Web3 from "web3";
 
 
 const ipfsClient = create("https://ipfs.infura.io:5001/api/v0");
+
 let web3 = new Web3(window.ethereum);
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const ipfsBaseUrl = "https://ipfs.infura.io/ipfs/";
+
 
 
   useEffect(() => {
@@ -247,15 +249,15 @@ function App() {
           (
           NFTS.map((nft, index)=> {
             return (
-              <s.Container key={index}  style={{padding:16}}>
-                <s.TextTitle>{nft.metaData.name}</s.TextTitle>
-                <s.TextTitle>{nft.metaData.price}</s.TextTitle>
-                <img 
-                alt={nft.metaData.name}
-                src={nft.metaData.image} 
-                width={250}
-                />
-              </s.Container>
+                <s.Container key={index}  style={{padding:16}}>
+                    <s.TextTitle>{nft.metaData.name}</s.TextTitle>
+                    <s.TextTitle>{web3.utils.fromWei(nft.metaData.price, "ether")}</s.TextTitle>
+                    <img 
+                    alt={nft.metaData.name}
+                    src={nft.metaData.image} 
+                    width={250}
+                    />
+                </s.Container>
             )
            })
           )}   
