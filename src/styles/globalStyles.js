@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 // Used for wrapping a page component
-export const Screen = styled.div`
-  background-color: var(--black);
+export const Main = styled.div`
+  background-color: #B9A49D;
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
   background-position: center;
@@ -11,6 +11,8 @@ export const Screen = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+
 
 // Used for providing space between components
 export const SpacerXSmall = styled.div`
@@ -53,8 +55,8 @@ export const Container = styled.div`
 
 // Form styling
 export const TextTitle = styled.p`
-  color: var(--white);
-  font-size: ${props => props.bigTitle ? "90px" : "20px"};
+  color: #201817;
+  font-size: ${props => props.bigTitle ? "90px" : "30px"};
   line-height: ${props => props.LineHight ? "50px" : "0px"}
   font-weight: 500;
   font-family: "Bai Jamjuree", sans-serif;
@@ -63,13 +65,13 @@ export const TextTitle = styled.p`
 `;
 
 export const TextSubTitle = styled.p`
-  color: var(--white);
+  color: #201817;
   font-size: 16px;
   font-weight: 500;
 `;
 
 export const TextDescription = styled.p`
-  color: var(--white);
+  color: #201817;
   font-size: 14px;
   font-weight: 600;
 `;
@@ -112,7 +114,7 @@ export const Input = styled.input`
 export const Label = styled.label`
     font-size: 18px;
     font-family: "poppins", sans-serif;
-    color: #fff;
+    color: #201817;
     letter-spacing: 1px;
 `;
 
@@ -128,7 +130,8 @@ export const Button = styled.button`
     font-weight: 600;
     transition: all 0.3s ease-in-out;
     font-weight: 500;
-    font-size: 19px;
+    font-size: 16px;
+    margin-top: 10px;
 
     &:hover {
       background-color: #dce7ff;
@@ -137,11 +140,64 @@ export const Button = styled.button`
 
 `;
 
-export const gridContainer = styled.div`
-     
+export const mainGridContainer = styled.section`
+    position: relative;
+    margin-top: 60px;
+    width: 100%;
 `;
 
-export const Card = styled.article`
-  
 
+export const gridContainer = styled.div`
+     display: grid;
+     justify-content: center;
+     grid-template-columns:repeat(auto-fill, 380px);
+     grid-gap : 40px;
+     margin: auto;
+`;
+
+
+export const nftCard = styled.div`
+  font-family: "Bai Jamjuree", sans-serif;
+  position: relative;
+  width: 380px;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  background-color: #EDE9E2;
+  color: #030303;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  border-radius: 10px;
+
+`;
+
+
+export const NFtImage = styled.img`
+    width: 100%;
+    height: 300px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+
+`;
+
+export const NFtTitle = styled.h3`
+  margin-top: 20px;
+  font-size: ${props => props.itSized ? "18px" : "26px"};
+  font-weight: ${props => props.itWeight ? "700" : "600"};
+`;
+
+export const NFtDesc = styled.p`
+    padding-top : 16px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 20px;  
+`;
+
+export const bodyCard = styled.div`
+   padding: 10px 20px 20px 20px;
+`;
+
+
+export const NFtPrice = styled.span`
+    font-weight:500;
 `;

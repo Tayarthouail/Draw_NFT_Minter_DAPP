@@ -10,6 +10,7 @@ import { create } from "ipfs-http-client";
 import SignatureCanvas from "react-signature-canvas";
 import Loading from "./Loading/Loading";
 import Web3 from "web3";
+import NFTCardList from "./contracts/components/NFTCardList";
 
 
 const ipfsClient = create("https://ipfs.infura.io:5001/api/v0");
@@ -31,6 +32,7 @@ function App() {
   const ipfsBaseUrl = "https://ipfs.infura.io/ipfs/";
 
 
+console.log(NFTS);
 
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
@@ -132,10 +134,10 @@ function App() {
 
 
   return (
-    <s.Screen>
+    <s.Main>
       {blockchain.account === "" || blockchain.smartContract === null ? (
         <s.Container flex={1} ai={"center"} jc={"center"}>
-          <s.TextTitle>Connect to Metamask</s.TextTitle>
+          <s.TextTitle >Connect to Metamask</s.TextTitle>
 
           <s.SpacerSmall />
 
@@ -236,14 +238,22 @@ function App() {
           <s.SpacerLarge/>
 
           <SignatureCanvas
-          backgroundColor={"#ffff"}
+          backgroundColor={"#EDE9E2"}
           canvasProps={{width:695, height:500}}
           ref= {elementRef}
           />
          <s.SpacerLarge /> 
 
-          
-         {data.loading ?
+        
+        <s.mainGridContainer>
+          <s.gridContainer>
+            <NFTCardList nfts={NFTS} />
+          </s.gridContainer>
+        </s.mainGridContainer>
+
+
+
+         {/* {data.loading ?
          (<> <Loading/> <s.SpacerLarge/> </>)
           :
           (
@@ -260,10 +270,11 @@ function App() {
                 </s.Container>
             )
            })
-          )}   
+          )}  */}
+           
         </s.Container>
       )}
-    </s.Screen>
+    </s.Main>
   );
 }
 
