@@ -38,3 +38,28 @@
     transform: rotate(360deg);
   }
 }
+
+
+.canvasStyle {
+  width:695px;
+  height:500px;
+}
+
+@media (max-width: 750px) {
+  .canvasStyle {
+    width:500px;
+  }
+}
+
+@media (max-width: 538px) {
+  .canvasStyle {
+    width:400px;
+  }
+}
+
+@media (max-width: 320px) {
+  .canvasStyle {
+    width:300px;
+  }
+}
+

@@ -201,3 +201,15 @@ export const bodyCard = styled.div`
 export const NFtPrice = styled.span`
     font-weight:500;
 `;
+
+
+export const canvasContainer = styled.div`
+    position:relative;
+    max-width: 500px;
+    width: 95vw;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+`;
+
+// width:695, height:500

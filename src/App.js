@@ -185,7 +185,7 @@ console.log(NFTS);
           </s.FromControl>
 
           <s.FromControl>
-          <s.Label>Price</s.Label>
+          <s.Label>Price/ETH</s.Label>
           <s.Input
             type="text"
             value={price}
@@ -237,11 +237,13 @@ console.log(NFTS);
 
           <s.SpacerLarge/>
 
+          <s.canvasContainer>
           <SignatureCanvas
           backgroundColor={"#EDE9E2"}
-          canvasProps={{width:695, height:500}}
+          canvasProps={{className: "canvasStyle"}}
           ref= {elementRef}
           />
+          </s.canvasContainer>
          <s.SpacerLarge /> 
 
         
