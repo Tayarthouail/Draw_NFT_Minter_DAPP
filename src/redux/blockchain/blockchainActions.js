@@ -1,6 +1,6 @@
 // constants
 import Web3 from "web3";
-import SmartContract from "../../contracts/SmartContract.json";
+import DrawNFT from "../../contracts/DrawNFT.json";
 // log
 import { fetchData } from "../data/dataActions";
 
@@ -41,15 +41,16 @@ export const connect = () => {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
+        
+        // Get the network version aka network Id of the network that we are connected wit it in metamask
         const networkId = await window.ethereum.request({
           method: "net_version",
         });
-        const NetworkData = await SmartContract.networks[networkId];
-  
-        if (NetworkData) {
+
+        if (networkId == 80001) {
           const SmartContractObj = new web3.eth.Contract(
-            SmartContract.abi,
-            NetworkData.address
+            DrawNFT.abi,
+            "0x7E50c39A9B108c71468100b46fed289d99D86573"
           );
           dispatch(
             connectSuccess({
