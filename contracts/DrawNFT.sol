@@ -22,7 +22,7 @@ contract SmartContract is ERC721, Ownable {
 
    constructor() ERC721("Smart Contract", "SCT") {}
 
-   //Set token URI(internal because it is going to be called only inside another function)
+
    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal {
        _tokenURIs[tokenId] = _tokenURI;
    }

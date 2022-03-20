@@ -1,5 +1,5 @@
 /* eslint-disable jest/valid-describe */
-const SmartContract = artifacts.require("../contracts/SmartContract.sol");
+const SmartContract = artifacts.require("../contracts/DrawNFT.sol");
 const { assert } = require("chai");
 
 require("chai").use(require("chai-as-promised")).should();

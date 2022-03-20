@@ -62,6 +62,10 @@ export const TextTitle = styled.p`
   font-family: "Bai Jamjuree", sans-serif;
   text-align: center;
   margin-bottom: ${props => props.Margin ? "20px" : "0"};
+
+  @media (max-width: 460px) {
+   font-size: ${props => props.bigTitle ? "60px" : "15px"};
+   }
 `;
 
 export const TextSubTitle = styled.p`
@@ -153,6 +157,11 @@ export const gridContainer = styled.div`
      grid-template-columns:repeat(auto-fill, 380px);
      grid-gap : 40px;
      margin: auto;
+
+    @media (max-width: 460px) {
+      width: 300px;
+      grid-template-columns: 1fr;
+   }
 `;
 
 
@@ -168,6 +177,10 @@ export const nftCard = styled.div`
   cursor: pointer;
   letter-spacing: 0.5px;
   border-radius: 10px;
+
+  @media (max-width: 460px) {
+     width: 300px;
+   }
 
 `;
 
@@ -211,5 +224,7 @@ export const canvasContainer = styled.div`
     justify-content: center;
     align-items:center;
 `;
+
+
 
 // width:695, height:500

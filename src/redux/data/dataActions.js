@@ -21,6 +21,7 @@ const fetchDataFailed = (payload) => {
   };
 };
 
+// Load Data from the contract
 export const fetchData = (account) => {
   return async (dispatch) => {
     dispatch(fetchDataRequest());

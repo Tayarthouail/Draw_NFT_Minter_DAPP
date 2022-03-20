@@ -5,12 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { connect } from "./redux/blockchain/blockchainActions";
 import { fetchData } from "./redux/data/dataActions";
 import * as s from "./styles/globalStyles";
-import styled from "styled-components";
 import { create } from "ipfs-http-client";
 import SignatureCanvas from "react-signature-canvas";
 import Loading from "./Loading/Loading";
 import Web3 from "web3";
-import NFTCardList from "./contracts/components/NFTCardList";
+import NFTCardList from "../src/components/NFTCardList";
+
+
+/* config the desire network from truffle
+after deploying the contract to the network I need to change the network ID
+from the ethereum.window config */ 
 
 
 const ipfsClient = create("https://ipfs.infura.io:5001/api/v0");
@@ -22,7 +26,6 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
   const elementRef = useRef();
-
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [NFTS, setNFTS] = useState([]);
@@ -31,8 +34,6 @@ function App() {
   const [price, setPrice] = useState("");
   const ipfsBaseUrl = "https://ipfs.infura.io/ipfs/";
 
-
-console.log(NFTS);
 
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
@@ -45,6 +46,11 @@ console.log(NFTS);
   },[data.allTokens])
 
 
+  // set Alert message
+  const showMessage = (msg) => {
+    return setStatus(msg);
+  }
+
   /*Function to mint the NFT */
   const mint = (_uri) =>  {
     blockchain.smartContract.methods
@@ -52,12 +58,14 @@ console.log(NFTS);
     .send({from : blockchain.account})
     .once("error", (err)=> {
       console.log(err)
+      setLoading(false);
+      showMessage("MetaMask : transaction was rejected!");
     })
     .then((receipt)=> {
       console.log(receipt);
       setLoading(false);
       clearCanvas();
-      setStatus("Successfully minting your NFT...!!");
+      showMessage("Successfully minting your NFT...!");
       setName("");
       setDescription("");
       setPrice("");
@@ -67,13 +75,15 @@ console.log(NFTS);
 
   /*Create metadata and path*/
   const createMetaDataAndPath = async (_name, _desc, _price, _imgBuffer) => {
-    setLoading(true);
-    setStatus("Minting your NFT is processing...!!");
-      try {
+      try { 
+      if(!_name || !_desc|| !_price) {
+        showMessage("Please enter a description to your NFT before Mint it ");
+      }
+
       // to add the image to the IPFS with CID
       const addImage = await ipfsClient.add(_imgBuffer);
       console.log(ipfsBaseUrl + addImage.path);
-
+      
       const MetaDataObj = {
         name: _name,
         description: _desc,
@@ -86,10 +96,13 @@ console.log(NFTS);
       console.log(ipfsBaseUrl + addedMetaData.path);
       mint(ipfsBaseUrl + addedMetaData.path);
 
+      setLoading(true);
+      showMessage("Minting your NFT is processing...!!");
+
       } catch(err) {
         console.log(err)
         setLoading(false);
-        setStatus("Something went wrong with the metadata...");
+        // showMessage("Something went wrong with the metadata...");
       }
   }
 
@@ -245,34 +258,19 @@ console.log(NFTS);
           />
           </s.canvasContainer>
          <s.SpacerLarge /> 
-
         
-        <s.mainGridContainer>
+        {data.loading ? 
+         <> <Loading/> <s.SpacerLarge/> </>
+         :
+         (
+          <s.mainGridContainer>
           <s.gridContainer>
             <NFTCardList nfts={NFTS} />
           </s.gridContainer>
         </s.mainGridContainer>
-
-
-
-         {/* {data.loading ?
-         (<> <Loading/> <s.SpacerLarge/> </>)
-          :
-          (
-          NFTS.map((nft, index)=> {
-            return (
-                <s.Container key={index}  style={{padding:16}}>
-                    <s.TextTitle>{nft.metaData.name}</s.TextTitle>
-                    <s.TextTitle>{web3.utils.fromWei(nft.metaData.price, "ether")}</s.TextTitle>
-                    <img 
-                    alt={nft.metaData.name}
-                    src={nft.metaData.image} 
-                    width={250}
-                    />
-                </s.Container>
-            )
-           })
-          )}  */}
+         )
+        }
+      
            
         </s.Container>
       )}
