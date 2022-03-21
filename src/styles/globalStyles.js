@@ -56,15 +56,17 @@ export const Container = styled.div`
 // Form styling
 export const TextTitle = styled.p`
   color: #201817;
-  font-size: ${props => props.bigTitle ? "90px" : "30px"};
-  line-height: ${props => props.LineHight ? "50px" : "0px"}
+  font-size: ${props => props.bigTitle ? "90px" : "20px"};
+  line-height: ${props => props.LineHight ? "50px" : "33px"};
   font-weight: 500;
   font-family: "Bai Jamjuree", sans-serif;
   text-align: center;
   margin-bottom: ${props => props.Margin ? "20px" : "0"};
 
   @media (max-width: 460px) {
-   font-size: ${props => props.bigTitle ? "60px" : "15px"};
+   font-size: ${props => props.bigTitle ? "60px" : "20px"};
+   line-height: ${props => props.LineHight ? "50px" : "30px"};
+   padding: 0px 15px;
    }
 `;
 
@@ -213,6 +215,12 @@ export const bodyCard = styled.div`
 
 export const NFtPrice = styled.span`
     font-weight:500;
+`;
+
+export const Span = styled.span`
+    font-size: 17px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 1px ;
 `;
 
 

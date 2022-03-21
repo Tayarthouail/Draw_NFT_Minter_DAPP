@@ -12,11 +12,6 @@ import Web3 from "web3";
 import NFTCardList from "../src/components/NFTCardList";
 
 
-/* config the desire network from truffle
-after deploying the contract to the network I need to change the network ID
-from the ethereum.window config */ 
-
-
 const ipfsClient = create("https://ipfs.infura.io:5001/api/v0");
 
 let web3 = new Web3(window.ethereum);
@@ -44,6 +39,20 @@ function App() {
   useEffect(()=> {
     fetchMetaDataForNFTS();
   },[data.allTokens])
+
+  // keep the user connected on page refresh
+  useEffect(()=> {
+    const onPageConnected = async () => {
+      if (localStorage?.getItem('isWalletConnected') === 'true') {
+        try{
+          dispatch(connect());
+        } catch(err) {
+          console.log(err);
+        }
+      }
+    }
+    onPageConnected();
+  },[])
 
 
   // set Alert message
@@ -102,7 +111,6 @@ function App() {
       } catch(err) {
         console.log(err)
         setLoading(false);
-        // showMessage("Something went wrong with the metadata...");
       }
   }
 
@@ -143,17 +151,22 @@ function App() {
   const clearCanvas = () => {
     const canvasEl = elementRef.current;
     canvasEl.clear();
-  } 
+  }
 
+  
 
   return (
     <s.Main>
       {blockchain.account === "" || blockchain.smartContract === null ? (
         <s.Container flex={1} ai={"center"} jc={"center"}>
-          <s.TextTitle >Connect to Metamask</s.TextTitle>
 
-          <s.SpacerSmall />
-
+         <s.SpacerLarge/>
+          <s.TextTitle bigTitle Margin>
+            WELCOME !
+          </s.TextTitle>
+          <s.SpacerLarge/>
+          <s.SpacerLarge/>
+          
           <s.Button
             onClick={(e) => {
               e.preventDefault();
@@ -168,14 +181,37 @@ function App() {
           {blockchain.errorMsg !== "" ? (
             <s.TextDescription>{blockchain.errorMsg}</s.TextDescription>
           ) : null}
+
+          <s.SpacerLarge />
+
+        <s.TextTitle >Connect to Metamask (Polygon mumbai test network)</s.TextTitle>
+
+        <s.TextTitle >Add the network to your wallet:
+          <s.Span>
+            <a href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/" target="_blank"
+            rel="noopener noreferrer"> Polygon Official docs</a>
+          </s.Span>
+        </s.TextTitle>
+
+        <s.TextTitle> Get free Matic token: 
+          <s.Span>
+            <a href="https://faucet.polygon.technology/" 
+            target="_blank"
+            rel="noopener noreferrer"
+            >  Polygon Faucet</a>
+          </s.Span>
+          </s.TextTitle>
+          <s.TextTitle> Enjoy</s.TextTitle>
         </s.Container>
       ) : (
         <s.Container flex={1} ai={"center"} style={{ padding: 24 }}>
+          <s.SpacerSmall />
           <s.SpacerLarge/>
           <s.SpacerLarge/>
           <s.TextTitle bigTitle Margin>
             Draw and mint your own NFT !
           </s.TextTitle>
+          <s.SpacerLarge/>
           <s.SpacerLarge/>
 
           <s.Form>
@@ -198,7 +234,7 @@ function App() {
           </s.FromControl>
 
           <s.FromControl>
-          <s.Label>Price/ETH</s.Label>
+          <s.Label>Price/MTC</s.Label>
           <s.Input
             type="text"
             value={price}
@@ -245,6 +281,13 @@ function App() {
             Clear
           </s.Button>
 
+          <s.SpacerSmall/>
+
+          <s.Button>
+            <a href="https://testnets.opensea.io/account" target="_blank" rel="noopener noreferrer">
+              See On Opensea</a>
+          </s.Button>
+
           </s.Container>
           
 
@@ -263,6 +306,7 @@ function App() {
          <> <Loading/> <s.SpacerLarge/> </>
          :
          (
+           
           <s.mainGridContainer>
           <s.gridContainer>
             <NFTCardList nfts={NFTS} />
@@ -270,8 +314,6 @@ function App() {
         </s.mainGridContainer>
          )
         }
-      
-           
         </s.Container>
       )}
     </s.Main>

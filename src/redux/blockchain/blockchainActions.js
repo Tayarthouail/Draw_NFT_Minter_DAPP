@@ -59,6 +59,10 @@ export const connect = () => {
               web3: web3,
             })
           );
+          
+          // add the connection in the local storage to still connected on refresh
+          localStorage.setItem("isWalletConnected", true);
+
           // Add listeners start
           window.ethereum.on("accountsChanged", (accounts) => {
             dispatch(updateAccount(accounts[0]));
@@ -72,6 +76,7 @@ export const connect = () => {
         }
       } catch (err) {
         dispatch(connectFailed("Something went wrong."));
+        localStorage.setItem("isWalletConnected", false);
       }
     } else {
       dispatch(connectFailed("Install Metamask."));
